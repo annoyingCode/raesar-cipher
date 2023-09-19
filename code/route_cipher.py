@@ -114,12 +114,22 @@ def encrypt(input, size, route):
 
 def decrypt(input, spaces, size, route):
 
+    # Get number of spaces to get correct number of blocks
+    num_spaces = sum(len(space) for space in spaces.values())
+
     # Output of Caesar decipher
     cipher_text = input
     cipher_text = decimal_to_hex(cipher_text)
 
+    # Append the spaces to get correct number of blocks
+    for i in range(num_spaces):
+        cipher_text += " "
+
     # Number of blocks
     blocks = math.ceil(len(cipher_text) / pow(size, 2))
+
+    # Remove the spaces from the end of the text
+    cipher_text = cipher_text.rstrip()
 
     # Create blocks
     blocks_decipher = create_blocks(blocks, size)
